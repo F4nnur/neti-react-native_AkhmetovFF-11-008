@@ -1,14 +1,11 @@
 import React from 'react';
-import { StyleSheet, Button, Text, View, Pressable } from 'react-native';
-import Main from './Main';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 
-const About = ({navigation}) => {
+const About = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.mainText}>About</Text>
-      <Pressable
-        style={styles.mainButton}
-        onPress={() => navigation.goBack()}>
+      <Pressable style={styles.mainButton} onPress={() => navigation.goBack()}>
         <Text style={styles.text}>Go Back</Text>
       </Pressable>
     </View>
