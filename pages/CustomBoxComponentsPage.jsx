@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import BoxPropsFirst from '../components/CustomComponentsTasks/BoxPropsFirst';
+import Button from '../components/UI/Button';
 
 const CustomBoxComponentsPage = () => {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [color, setColor] = useState('');
+  const [align, setAlign] = useState('');
+  const [radius, setRadius] = useState(0);
+  const [view, setView] = useState(false);
   const [box, setBox] = useState([]);
 
   const handleDelete = () => {
     setBox([]);
   };
-  const handleAdd = (w, h, c) => {
-    setBox([...box, { width: w, height: h, color: c }]);
+
+  const handleAdd = (w, h, c, a, r, v) => {
+    setBox([...box, { width: w, height: h, color: c, align: a, radius: r, view: v }]);
   };
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.boxesContainer}>
-        {box.map(item => (
-          <BoxPropsFirst width={item.width} height={item.height} color={item.color} />
-        ))}
-      </View>
+      {box.map(item => (
+        <BoxPropsFirst
+          width={item.width}
+          height={item.height}
+          color={item.color}
+          align={item.align}
+          radius={item.radius}
+          view={item.view}
+        />
+      ))}
       <View style={{ flex: 1 }}>
         <View style={{ marginBottom: 16 }}>
           <View style={{ marginBottom: 16 }}>
@@ -36,6 +46,20 @@ const CustomBoxComponentsPage = () => {
             <TextInput
               style={{ height: 50, padding: 8, backgroundColor: '#d9cece' }}
               onChangeText={text => setHeight(Number(text))}
+            ></TextInput>
+          </View>
+          <View style={{ marginBottom: 16 }}>
+            <Text>Align:</Text>
+            <TextInput
+              style={{ height: 50, padding: 8, backgroundColor: '#d9cece' }}
+              onChangeText={text => setAlign(text.toLowerCase())}
+            ></TextInput>
+          </View>
+          <View style={{ marginBottom: 16 }}>
+            <Text>Radius:</Text>
+            <TextInput
+              style={{ height: 50, padding: 8, backgroundColor: '#d9cece' }}
+              onChangeText={text => setRadius(Number(text))}
             ></TextInput>
           </View>
         </View>
@@ -56,11 +80,14 @@ const CustomBoxComponentsPage = () => {
             ></Pressable>
           </View>
           <View style={styles.buttonsContainer}>
-            <Pressable style={styles.mainButton} onPress={() => handleAdd(width, height, color)}>
-              <Text style={{ color: 'white' }}>Add</Text>
+            <Pressable style={styles.mainButton} onPress={() => handleAdd(width, height, color, align, radius, view)}>
+              <Text style={{ color: 'white' }}>Add Box</Text>
             </Pressable>
             <Pressable style={styles.mainButton} onPress={handleDelete}>
               <Text style={{ color: 'white' }}>Delete</Text>
+            </Pressable>
+            <Pressable style={styles.mainButton} onPress={() => setView(!view)}>
+              <Text style={view ? { color: 'red' } : { color: 'white' }}>{view ? 'Delete View' : 'Add View'}</Text>
             </Pressable>
           </View>
         </View>
