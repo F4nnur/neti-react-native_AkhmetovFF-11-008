@@ -10,19 +10,21 @@ const CustomBoxComponentsPage = () => {
   const [radius, setRadius] = useState(0);
   const [view, setView] = useState(false);
   const [box, setBox] = useState([]);
+  const date = new Date();
 
   const handleDelete = () => {
     setBox([]);
   };
 
   const handleAdd = (w, h, c, a, r, v) => {
-    setBox([...box, { width: w, height: h, color: c, align: a, radius: r, view: v }]);
+    setBox([...box, { key: date.getTime(), width: w, height: h, color: c, align: a, radius: r, view: v }]);
   };
 
   return (
     <ScrollView style={styles.container}>
       {box.map(item => (
         <BoxPropsFirst
+          key={item.key}
           width={item.width}
           height={item.height}
           color={item.color}
