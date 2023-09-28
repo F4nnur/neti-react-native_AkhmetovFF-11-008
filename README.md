@@ -3,4 +3,4 @@
 
 # Запись домашки №3
 
-[sreenCastHw3.mov](assets%2FsreenCastHw3.mov)
+[![Watch the video](https://img.youtube.com/vi/1yO5ksRTQMU/default.jpg)](https://www.youtube.be/1yO5ksRTQMU)
