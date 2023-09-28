@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import BoxPropsFirst from '../components/CustomComponentsTasks/BoxPropsFirst';
-import Button from '../components/UI/Button';
 
 const CustomBoxComponentsPage = () => {
   const [width, setWidth] = useState(0);
