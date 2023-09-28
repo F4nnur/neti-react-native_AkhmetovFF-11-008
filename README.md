@@ -3,4 +3,4 @@
 
 # Запись домашки №3
 
-[![asciicast](/assets/sreenCastHw3.mov)
+[![Watch the video]](/assets/sreenCastHw3.mov)
