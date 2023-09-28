@@ -3,4 +3,4 @@
 
 # Запись домашки №3
 
-[Watch the video](https://www.youtube.be/1yO5ksRTQMU)
+[Watch the video]https://www.youtube.com/watch?v=1yO5ksRTQMU)
