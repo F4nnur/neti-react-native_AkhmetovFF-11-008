@@ -4,6 +4,7 @@ import About from './About';
 import Login from './Login';
 import TextInputTasksPage from './TextInputTasksPage';
 import CustomBoxComponentsPage from './CustomBoxComponentsPage';
+import TodoPage from './TodoPage';
 
 const Main = ({ navigation: { navigate } }) => {
   return (
@@ -21,6 +22,9 @@ const Main = ({ navigation: { navigate } }) => {
         </Pressable>
         <Pressable style={styles.mainButton} onPress={() => navigate(CustomBoxComponentsPage)}>
           <Text style={styles.text}>CustomBoxComp</Text>
+        </Pressable>
+        <Pressable style={styles.mainButton} onPress={() => navigate(TodoPage)}>
+          <Text style={styles.text}>TodoPage</Text>
         </Pressable>
       </View>
     </View>
