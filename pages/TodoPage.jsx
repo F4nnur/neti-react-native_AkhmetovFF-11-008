@@ -9,13 +9,15 @@ import { useRootStore } from '../hooks/useRootStore';
 const TodoPage = observer(({ navigation }) => {
   const [text, setText] = useState('');
   const [selectedImageUri, setSelectedImageUri] = useState(null);
-  const { todoStore } = useRootStore();
+  const { todoStore, logsStore } = useRootStore();
 
   useEffect(() => {
     todoStore.getTodoObjectFromService();
+    logsStore.getLogsObjectFromService();
   }, []);
   const addTodo = () => {
     todoStore.actionAdd(text, false, selectedImageUri);
+    logsStore.actionForAnyOperation(`Добавлена запись: ${text}`);
     setText('');
     setSelectedImageUri(null);
   };
@@ -36,9 +38,11 @@ const TodoPage = observer(({ navigation }) => {
   };
   const handleComplete = index => {
     todoStore.actionComplete(index);
+    logsStore.actionForAnyOperation(`Задача под названием: ${todoStore.todoModel.todos[index].text} была выполнена`);
   };
 
   const deleteTodo = index => {
+    logsStore.actionForAnyOperation(`Задача под названием: ${todoStore.todoModel.todos[index].text} была удалена`);
     todoStore.actionDelete(index);
   };
 
@@ -73,6 +77,12 @@ const TodoPage = observer(({ navigation }) => {
           }
         >
           <Text style={{ padding: 4 }}>Завершенные</Text>
+        </Pressable>
+        <Pressable
+          style={styles.btnCompleted}
+          onPress={() => navigation.navigate('LogsPage', { logs: logsStore.logsModel.logs })}
+        >
+          <Text style={{ padding: 4, textAlign: 'center' }}>Логи</Text>
         </Pressable>
         <TextInput style={styles.textInput} onChangeText={newText => setText(newText)} value={text}></TextInput>
         <Button title=' ADD ' onPress={() => addTodo()}></Button>

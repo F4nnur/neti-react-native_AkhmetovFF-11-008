@@ -7,6 +7,7 @@ import TextInputTasksPage from '../pages/TextInputTasksPage';
 import CustomBoxComponentsPage from '../pages/CustomBoxComponentsPage';
 import TodoPage from '../pages/TodoPage';
 import CompletedTasksPage from '../pages/CompletedTasksPage';
+import LogsPage from '../pages/logs/LogsPage';
 
 const Navigation = () => {
   const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const Navigation = () => {
       <Stack.Screen name='CustomBoxComponentsPage' component={CustomBoxComponentsPage} />
       <Stack.Screen name='TodoPage' component={TodoPage} />
       <Stack.Screen name='CompletedTasksPage' component={CompletedTasksPage} />
+      <Stack.Screen name='LogsPage' component={LogsPage} />
     </Stack.Navigator>
   );
 };
