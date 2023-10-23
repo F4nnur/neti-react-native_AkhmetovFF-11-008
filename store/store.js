@@ -1,11 +1,14 @@
 import { createContext } from 'react';
-import { ClickStore } from './ClickStore';
+import { ClickStore } from './ClickerModule/ClickStore';
+import { TodoStore } from './TodoModule/TodoStore';
 
 class RootStore {
   clickerStore;
+  todoStore;
 
   constructor() {
     this.clickerStore = new ClickStore();
+    this.todoStore = new TodoStore();
   }
 }
 

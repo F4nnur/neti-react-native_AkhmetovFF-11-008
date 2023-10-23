@@ -13,13 +13,13 @@ const Navigation = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name={'Home'} component={Main} />
-      <Stack.Screen name={'About'} component={About} />
-      <Stack.Screen name={'Login'} component={Login} />
-      <Stack.Screen name={'TextInputTasksPage'} component={TextInputTasksPage} />
-      <Stack.Screen name={'CustomBoxComponentsPage'} component={CustomBoxComponentsPage} />
-      <Stack.Screen name={'TodoPage'} component={TodoPage} />
-      <Stack.Screen name={'CompletedTasksPage'} component={CompletedTasksPage} />
+      <Stack.Screen name='Home' component={Main} />
+      <Stack.Screen name='About' component={About} />
+      <Stack.Screen name='Login' component={Login} />
+      <Stack.Screen name='TextInputTasksPage' component={TextInputTasksPage} />
+      <Stack.Screen name='CustomBoxComponentsPage' component={CustomBoxComponentsPage} />
+      <Stack.Screen name='TodoPage' component={TodoPage} />
+      <Stack.Screen name='CompletedTasksPage' component={CompletedTasksPage} />
     </Stack.Navigator>
   );
 };

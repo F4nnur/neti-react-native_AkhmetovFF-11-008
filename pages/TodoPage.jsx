@@ -1,19 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView, Pressable } from 'react-native';
 import TodoItem from '../components/TodoItem/TodoItem';
 import * as ImagePicker from 'expo-image-picker';
+import { observer } from 'mobx-react';
+import { useRootStore } from '../hooks/useRootStore';
 
-const TodoPage = ({ navigation }) => {
-  const [todos, setTodos] = useState([]);
+const TodoPage = observer(({ navigation }) => {
   const [text, setText] = useState('');
-  const [completed, setCompleted] = useState([]);
   const [selectedImageUri, setSelectedImageUri] = useState(null);
+  const { todoStore } = useRootStore();
 
+  useEffect(() => {
+    todoStore.getTodoObjectFromService();
+  }, []);
   const addTodo = () => {
-    let newTodos = [...todos];
-    newTodos.push({ text: text, isCompleted: false, image: selectedImageUri });
-    setTodos(newTodos);
+    todoStore.actionAdd(text, false, selectedImageUri);
     setText('');
     setSelectedImageUri(null);
   };
@@ -33,42 +35,42 @@ const TodoPage = ({ navigation }) => {
     return index.toString();
   };
   const handleComplete = index => {
-    const data = [...todos];
-    data[index].isCompleted = !data[index].isCompleted;
-    setTodos(data);
-    if (data[index].isCompleted) {
-      setCompleted(prevCompleted => [...prevCompleted, data[index]]);
-    } else {
-      setCompleted(prevCompleted => prevCompleted.filter(item => item !== data[index]));
-    }
+    todoStore.actionComplete(index);
   };
 
   const deleteTodo = index => {
-    const data = [...todos];
-    data.splice(index, 1);
-    setTodos(data);
+    todoStore.actionDelete(index);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text>NEW:</Text>
-        <FlatList
-          data={todos}
-          keyExtractor={(item, index) => keyExtractor(index)}
-          renderItem={({ item, index }) => (
-            <TodoItem
-              item={item.text}
-              isCompleted={item.isCompleted}
-              handleDelete={deleteTodo}
-              handleComplete={handleComplete}
-              index={index}
-              image={item.image}
-            />
-          )}
-        />
+        {todoStore.todoModel && !todoStore.isLoading ? (
+          <FlatList
+            data={todoStore.todoModel.todos}
+            keyExtractor={(item, index) => keyExtractor(index)}
+            renderItem={({ item, index }) => (
+              <TodoItem
+                item={item.text}
+                isCompleted={item.isCompleted}
+                handleDelete={deleteTodo}
+                handleComplete={handleComplete}
+                index={index}
+                image={item.image}
+              />
+            )}
+          />
+        ) : (
+          <Text>Loading</Text>
+        )}
         <Pressable
           style={styles.btnCompleted}
-          onPress={() => navigation.navigate('CompletedTasksPage', { completed: completed })}
+          onPress={() =>
+            navigation.navigate('CompletedTasksPage', {
+              completed: todoStore.actionGetCompleteTodos(todoStore.todoModel.todos) || [],
+            })
+          }
         >
           <Text style={{ padding: 4 }}>Завершенные</Text>
         </Pressable>
@@ -79,7 +81,7 @@ const TodoPage = ({ navigation }) => {
       </View>
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   btnCompleted: {
