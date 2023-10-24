@@ -38,8 +38,7 @@ export class TodoStore {
   };
 
   actionGetCompleteTodos = data => {
-    const model = this.todoService.getCompletedTodos(data);
-    return model;
+    return this.todoService.getCompletedTodos(data);
   };
 
   setIsLoading = value => {

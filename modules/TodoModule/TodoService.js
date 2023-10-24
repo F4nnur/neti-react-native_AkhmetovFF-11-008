@@ -32,7 +32,6 @@ export default class TodoService {
   };
 
   getCompletedTodos = data => {
-    const model = data.filter(item => item.isCompleted);
-    return model;
+    return data.filter(item => item.isCompleted);
   };
 }
