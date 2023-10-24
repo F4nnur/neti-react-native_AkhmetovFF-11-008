@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import TextInputFirstTask from '../components/TextInputTask/TextInputFirstTask';
-import TextInputSecondTask from '../components/TextInputTask/TextInputSecondTask';
+import TextInputFirstTask from '../../components/TextInputTask/TextInputFirstTask';
+import TextInputSecondTask from '../../components/TextInputTask/TextInputSecondTask';
 
 const TextInputTasksPage = () => {
   return (

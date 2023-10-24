@@ -1,10 +1,10 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import ImageViewer from '../components/ImageViewer/ImageViewer';
+import ImageViewer from '../../components/ImageViewer/ImageViewer';
 
 const CompletedTasksPage = ({ route }) => {
   const { completed } = route.params;
-  const placeholderImageSource = require('../assets/icon.png');
+  const placeholderImageSource = require('../../assets/icon.png');
 
   return (
     <View>

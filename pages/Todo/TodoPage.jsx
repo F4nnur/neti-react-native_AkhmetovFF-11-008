@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView, Pressable } from 'react-native';
-import TodoItem from '../components/TodoItem/TodoItem';
+import TodoItem from '../../components/TodoItem/TodoItem';
 import * as ImagePicker from 'expo-image-picker';
 import { observer } from 'mobx-react';
-import { useRootStore } from '../hooks/useRootStore';
+import { useRootStore } from '../../hooks/useRootStore';
 
 const TodoPage = observer(({ navigation }) => {
   const [text, setText] = useState('');

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { ClickStore } from './ClickerModule/ClickStore';
-import { TodoStore } from './TodoModule/TodoStore';
-import { LogsStore } from './LogsModule/LogsStore';
+import { ClickStore } from '../modules/ClickerModule/ClickStore';
+import { TodoStore } from '../modules/TodoModule/TodoStore';
+import { LogsStore } from '../modules/LogsModule/LogsStore';
 
 class RootStore {
   clickerStore;

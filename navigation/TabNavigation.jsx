@@ -6,7 +6,7 @@ import ChatPage from '../pages/chat/ChatPage';
 import NewsPage from '../pages/news/NewsPage';
 import Navigation from './Navigation';
 import { Image, Pressable, Text } from 'react-native';
-import About from '../pages/About';
+import About from '../pages/about/About';
 
 const TabNavigation = ({ navigation: { navigate } }) => {
   const Tab = createBottomTabNavigator();

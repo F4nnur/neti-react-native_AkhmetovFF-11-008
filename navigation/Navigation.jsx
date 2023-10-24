@@ -1,12 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Main from '../pages/Main';
-import About from '../pages/About';
-import Login from '../pages/Login';
-import TextInputTasksPage from '../pages/TextInputTasksPage';
-import CustomBoxComponentsPage from '../pages/CustomBoxComponentsPage';
-import TodoPage from '../pages/TodoPage';
-import CompletedTasksPage from '../pages/CompletedTasksPage';
+import Main from '../pages/main/Main';
+import About from '../pages/about/About';
+import Login from '../pages/login/Login';
+import TextInputTasksPage from '../pages/input/TextInputTasksPage';
+import CustomBoxComponentsPage from '../pages/box/CustomBoxComponentsPage';
+import TodoPage from '../pages/Todo/TodoPage';
+import CompletedTasksPage from '../pages/Todo/CompletedTasksPage';
 import LogsPage from '../pages/logs/LogsPage';
 
 const Navigation = () => {
