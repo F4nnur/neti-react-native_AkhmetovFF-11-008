@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { axiosClient } from '../axisos';
 
 export const getPosts = (_limit, _page) => {
