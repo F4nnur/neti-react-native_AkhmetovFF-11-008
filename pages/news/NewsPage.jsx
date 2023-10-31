@@ -12,15 +12,17 @@ const NewsPage = observer(() => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
-        {!postsStore.isLoading
-          ? postsStore.posts.map((item, index) => {
-              return (
-                <View key={index} style={styles.item}>
-                  <Text style={styles.itemBody}>{item.body}</Text>
-                </View>
-              );
-            })
-          : null}
+        {!postsStore.isLoading ? (
+          postsStore.posts.map((item, index) => {
+            return (
+              <View key={index} style={styles.item}>
+                <Text style={styles.itemBody}>{item.body}</Text>
+              </View>
+            );
+          })
+        ) : (
+          <Text style={{ textAlign: 'center' }}>loading posts</Text>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
