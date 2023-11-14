@@ -1,22 +1,21 @@
-import LogsRepository from './LogsRepository';
-import { LogsModel } from './LogsModel';
+import LocalRepository from '../../local/LocalRepository';
 
 export default class LogsService {
-  logsRepository;
+  localRepository;
 
   constructor() {
-    this.logsRepository = new LogsRepository();
+    this.localRepository = new LocalRepository('Logs');
   }
 
-  getAndPrepareDataForStore = () => {
-    const data = this.logsRepository.getData();
-    const model = new LogsModel();
-    model.logs = data.logs;
-    return model;
+  getLogs = async () => {
+    return await this.localRepository.getItems();
+  };
+  addLogs = async value => {
+    await this.localRepository.setItems(value);
+    return await this.localRepository.getItems();
   };
 
-  addLogs = (model, data) => {
-    model.logs.push({ text: data });
-    return model;
+  deleteLogs = async () => {
+    await this.localRepository.removeAll();
   };
 }

@@ -1,19 +1,31 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Button, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { observer } from 'mobx-react';
+import { useRootStore } from '../../hooks/useRootStore';
 
-const LogsPage = ({ route }) => {
-  const { logs } = route.params;
+const LogsPage = observer(() => {
+  const { logsStore } = useRootStore();
+  const logs = logsStore.logs;
+
+  useEffect(() => {}, [logs]);
+
+  const deleteLogs = async () => {
+    await logsStore.actionDeleteLogsFromLocal();
+  };
 
   return (
-    <ScrollView>
-      {logs.map((item, index) => (
-        <View style={styles.text} key={index}>
-          <Text>{item.text}</Text>
-        </View>
-      ))}
-    </ScrollView>
+    <SafeAreaView>
+      <Button title={'Delete Logs'} onPress={deleteLogs}></Button>
+      <ScrollView>
+        {logs.map((item, index) => (
+          <View style={styles.text} key={index}>
+            <Text>{item}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   text: {

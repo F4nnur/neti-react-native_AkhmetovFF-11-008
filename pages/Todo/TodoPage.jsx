@@ -13,11 +13,11 @@ const TodoPage = observer(({ navigation }) => {
 
   useEffect(() => {
     todoStore.getTodoObjectFromService();
-    logsStore.getLogsObjectFromService();
+    // logsStore.getLogsObjectFromService();
   }, []);
-  const addTodo = () => {
+  const addTodo = async () => {
     todoStore.actionAdd(text, false, selectedImageUri);
-    logsStore.actionForAnyOperation(`Добавлена запись: ${text}`);
+    await logsStore.actionForAnyOperation(`Добавлена запись: ${text}`);
     setText('');
     setSelectedImageUri(null);
   };
@@ -36,13 +36,17 @@ const TodoPage = observer(({ navigation }) => {
   const keyExtractor = index => {
     return index.toString();
   };
-  const handleComplete = index => {
+  const handleComplete = async index => {
     todoStore.actionComplete(index);
-    logsStore.actionForAnyOperation(`Задача под названием: ${todoStore.todoModel.todos[index].text} была выполнена`);
+    await logsStore.actionForAnyOperation(
+      `Задача под названием: ${todoStore.todoModel.todos[index].text} была выполнена`,
+    );
   };
 
-  const deleteTodo = index => {
-    logsStore.actionForAnyOperation(`Задача под названием: ${todoStore.todoModel.todos[index].text} была удалена`);
+  const deleteTodo = async index => {
+    await logsStore.actionForAnyOperation(
+      `Задача под названием: ${todoStore.todoModel.todos[index].text} была удалена`,
+    );
     todoStore.actionDelete(index);
   };
 
@@ -78,10 +82,7 @@ const TodoPage = observer(({ navigation }) => {
         >
           <Text style={{ padding: 4 }}>Завершенные</Text>
         </Pressable>
-        <Pressable
-          style={styles.btnCompleted}
-          onPress={() => navigation.navigate('LogsPage', { logs: logsStore.logsModel.logs })}
-        >
+        <Pressable style={styles.btnCompleted} onPress={() => navigation.navigate('LogsPage')}>
           <Text style={{ padding: 4, textAlign: 'center' }}>Логи</Text>
         </Pressable>
         <TextInput style={styles.textInput} onChangeText={newText => setText(newText)} value={text}></TextInput>

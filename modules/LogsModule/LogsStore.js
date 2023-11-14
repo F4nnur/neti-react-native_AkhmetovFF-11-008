@@ -2,25 +2,30 @@ import { makeAutoObservable } from 'mobx';
 import LogsService from './LogsService';
 
 export class LogsStore {
-  logsModel = null;
+  logs = [];
   logsService;
 
   constructor() {
     makeAutoObservable(this);
     this.logsService = new LogsService();
   }
-
-  getLogsObjectFromService = () => {
-    const model = this.logsService.getAndPrepareDataForStore();
-    this.setModel(model);
+  // getLogsObjectFromService = async () => {
+  //   const data = await this.logsService.getLogs();
+  //   this.setLogs(data);
+  // };
+  setLogs = value => {
+    this.logs.push(value);
   };
 
-  setModel = value => {
-    this.logsModel = value;
+  removeLogs = () => {
+    this.logs = [];
+  };
+  actionForAnyOperation = async value => {
+    this.setLogs(await this.logsService.addLogs(value));
   };
 
-  actionForAnyOperation = value => {
-    const model = this.logsService.addLogs(this.logsModel, value);
-    this.setModel(model);
+  actionDeleteLogsFromLocal = async () => {
+    await this.logsService.deleteLogs();
+    this.removeLogs();
   };
 }
