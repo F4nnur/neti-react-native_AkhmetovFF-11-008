@@ -1,19 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView, Pressable } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  FlatList,
+  SafeAreaView,
+  Pressable,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import TodoItem from '../../components/TodoItem/TodoItem';
 import * as ImagePicker from 'expo-image-picker';
 import { observer } from 'mobx-react';
 import { useRootStore } from '../../hooks/useRootStore';
+import { Modalize } from 'react-native-modalize';
 
 const TodoPage = observer(({ navigation }) => {
   const [text, setText] = useState('');
   const [selectedImageUri, setSelectedImageUri] = useState(null);
   const { todoStore, logsStore } = useRootStore();
-
+  const modalRef = useRef(null);
   useEffect(() => {
     todoStore.getTodoObjectFromService();
-    // logsStore.getLogsObjectFromService();
   }, []);
   const addTodo = async () => {
     todoStore.actionAdd(text, false, selectedImageUri);
@@ -50,6 +61,31 @@ const TodoPage = observer(({ navigation }) => {
     todoStore.actionDelete(index);
   };
 
+  const alertFunction = index => {
+    return Alert.alert('Do u really want to', 'Delete', [
+      {
+        text: 'Cancel',
+        onPress: () => {
+          console.log('Canceled');
+        },
+        style: 'cancel',
+      },
+      { text: 'Delete', onPress: () => deleteTodo(index) },
+    ]);
+  };
+
+  const modalFunction = () => {
+    modalRef.current.open();
+  };
+  const getTodo = () =>
+    todoStore.todoModel === null ? [] : todoStore.actionGetCompleteTodos(todoStore.todoModel.todos);
+
+  const renderItem = ({ item, index }) => (
+    <View key={index}>
+      <Text>{item.text}</Text>
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -62,7 +98,7 @@ const TodoPage = observer(({ navigation }) => {
               <TodoItem
                 item={item.text}
                 isCompleted={item.isCompleted}
-                handleDelete={deleteTodo}
+                handleDelete={alertFunction}
                 handleComplete={handleComplete}
                 index={index}
                 image={item.image}
@@ -72,16 +108,34 @@ const TodoPage = observer(({ navigation }) => {
         ) : (
           <Text>Loading</Text>
         )}
-        <Pressable
-          style={styles.btnCompleted}
-          onPress={() =>
-            navigation.navigate('CompletedTasksPage', {
-              completed: todoStore.actionGetCompleteTodos(todoStore.todoModel.todos) || [],
-            })
-          }
-        >
-          <Text style={{ padding: 4 }}>Завершенные</Text>
-        </Pressable>
+        <>
+          <TouchableOpacity style={styles.btnCompleted} onPress={modalFunction}>
+            <Text style={{ padding: 4 }}>Завершенные</Text>
+          </TouchableOpacity>
+          <Modalize
+            ref={modalRef}
+            modalTopOffset={300}
+            closeOnOverlayTap
+            disableScrollIfPossible={false}
+            withHandle={false}
+            childrenStyle={{
+              padding: 20,
+            }}
+            modalStyle={{
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+            }}
+            overlayStyle={{
+              backgroundColor: 'gray',
+            }}
+            flatListProps={{
+              data: getTodo(),
+              keyExtractor: item => item.text,
+              renderItem: renderItem,
+              showsVerticalScrollIndicator: false,
+            }}
+          ></Modalize>
+        </>
         <Pressable style={styles.btnCompleted} onPress={() => navigation.navigate('LogsPage')}>
           <Text style={{ padding: 4, textAlign: 'center' }}>Логи</Text>
         </Pressable>
